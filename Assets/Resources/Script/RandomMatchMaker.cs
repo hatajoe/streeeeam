@@ -6,8 +6,11 @@ public class RandomMatchMaker : MonoBehaviour
 
 	// Use this for initialization
 	void Start()
+	{}
+
+	public void Make()
 	{
- 		PhotonNetwork.ConnectUsingSettings("0.1");
+		PhotonNetwork.ConnectUsingSettings("0.1");
 		PhotonNetwork.logLevel = PhotonLogLevel.Full;
 	}
 
@@ -16,10 +19,14 @@ public class RandomMatchMaker : MonoBehaviour
 		PhotonNetwork.JoinRandomRoom();
 	}
 
+	void OnJoinedRoom()
+	{
+	}
+
 	void OnPhotonRandomJoinFailed()
 	{
 		Debug.Log("Can't join random room!");
-		PhotonNetwork.CreateRoom(null);
+		PhotonNetwork.CreateRoom("STREEEEAM");
 	}
 
 	void OnGUI()
