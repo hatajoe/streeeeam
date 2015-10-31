@@ -9,8 +9,8 @@ public class Space : MonoBehaviour {
 	public static float COMMET_INITIAL_POS_Y_MAX = 1.90f;
 	public static float COMMET_INITIAL_DELTA_MIN = 300.0f;
 	public static float COMMET_INITIAL_DELTA_MAX = 1050.0f;
-	public static float COMMET_VELOCITY_MIN = 0.05f;
-	public static float COMMET_VELOCITY_MAX = 0.10f;
+	public static float COMMET_VELOCITY_MIN = 0.01f;
+	public static float COMMET_VELOCITY_MAX = 0.05f;
 	public static float COMMET_SCALE_MIN = 0.8f;
 	public static float COMMET_SCALE_MAX = 1.2f;
 
