@@ -15,28 +15,14 @@ public class Space : MonoBehaviour {
 	public static float COMMET_SCALE_MAX = 6.0f;
 
 	public GameObject commet;
+	public GameObject player;
 	public GameObject demo;
 	private List<Commet> commets;
 
 	// Use this for initialization
 	void Start () {
 
-		this.commets = new List<Commet> ();
-		
-		for (int i = 0; i < COMMET_COUNT; i++) {
-			float y = this.GetRandomByRange(COMMET_INITIAL_POS_Y_MIN, COMMET_INITIAL_POS_Y_MAX);
-			float initialDelta = this.GetRandomByRange(COMMET_INITIAL_DELTA_MIN, COMMET_INITIAL_DELTA_MAX);
-			float velocity = this.GetRandomByRange(COMMET_VELOCITY_MIN, COMMET_VELOCITY_MAX);
-			float scale  = this.GetRandomByRange(COMMET_SCALE_MIN, COMMET_SCALE_MAX);
-			
-			//GameObject obj = (GameObject)PhotonNetwork.Instantiate("commet", commet.transform.position, commet.transform.localRotation, 0);
-			
-						GameObject obj = (GameObject)Instantiate (commet);
-			
-			Commet c = obj.GetComponentInChildren<Commet>();
-			c.Init(y, initialDelta, velocity, scale);
-			this.commets.Add (c);
-		}
+		this.CreateCommet(COMMET_COUNT);
 	}
 	
 	// Update is called once per frame
@@ -48,11 +34,22 @@ public class Space : MonoBehaviour {
 		return Random.value * (max - min) + min;
 	}
 
+	public void Setup()
+	{
+		this.RemoveCommets(); 
+		this.CreateCommet(COMMET_COUNT);
+		this.CreatePlayer();
+
+		Destroy(demo);
+	}
+
 	public void SetupForPUN()
 	{
 		this.RemoveCommets(); 
 		this.CreateCommetForPUN(COMMET_COUNT);
-		this.CreatePlayer();
+		this.CreatePlayerForPUN();
+
+		Destroy(demo);
 	}
 
 	private void RemoveCommets()
@@ -66,6 +63,24 @@ public class Space : MonoBehaviour {
 		}
 	}
 
+	private void CreateCommet( int count )
+	{
+		this.commets = new List<Commet> ();
+		
+		for (int i = 0; i < count; i++) {
+			float y = this.GetRandomByRange(COMMET_INITIAL_POS_Y_MIN, COMMET_INITIAL_POS_Y_MAX);
+			float initialDelta = this.GetRandomByRange(COMMET_INITIAL_DELTA_MIN, COMMET_INITIAL_DELTA_MAX);
+			float velocity = this.GetRandomByRange(COMMET_VELOCITY_MIN, COMMET_VELOCITY_MAX);
+			float scale  = this.GetRandomByRange(COMMET_SCALE_MIN, COMMET_SCALE_MAX);
+
+			GameObject obj = (GameObject)Instantiate (commet);
+			
+			Commet c = obj.GetComponentInChildren<Commet>();
+			c.Init(y, initialDelta, velocity, scale);
+			this.commets.Add (c);
+		}
+	}
+	
 	private void CreateCommetForPUN( int count )
 	{
 		this.commets = new List<Commet> ();
@@ -81,12 +96,18 @@ public class Space : MonoBehaviour {
 			Commet c = obj.GetComponentInChildren<Commet>();
 			c.Init(y, initialDelta, velocity, scale);
 			this.commets.Add (c);
-
-			Destroy(demo);
 		}
 	}
 
 	private void CreatePlayer()
+	{
+		GameObject obj = (GameObject)Instantiate(this.player, demo.transform.position, demo.transform.localRotation);
+	
+		obj.GetComponentInChildren<Player>().RegisterToTrackingCamera();
+		obj.transform.SetParent(this.gameObject.transform.parent);
+	}
+
+	private void CreatePlayerForPUN()
 	{
 		GameObject obj = PhotonNetwork.Instantiate("playerPUN", demo.transform.position, demo.transform.localRotation, 0);
 

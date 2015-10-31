@@ -21,6 +21,7 @@ public class MainCanvas : MonoBehaviour
 		Pause,
 		Play,
 		InitPlay,
+		InitOnline,
 	}
 
 	private Phase phase = 0;
@@ -89,6 +90,11 @@ public class MainCanvas : MonoBehaviour
 			this.SetupInitPlay();
 			break;
 		}
+		case MainCanvas.Phase.InitOnline:
+		{
+			this.SetupInitOnline();
+			break;
+		}
 		}
 	}
 
@@ -139,7 +145,14 @@ public class MainCanvas : MonoBehaviour
 
 	private void SetupInitPlay()
 	{
+		this.space.Setup();
+		this.ChangePhase(MainCanvas.Phase.Play);
+	}
+
+	private void SetupInitOnline()
+	{
 		this.space.SetupForPUN();
 		this.ChangePhase(MainCanvas.Phase.Play);
 	}
+
 }

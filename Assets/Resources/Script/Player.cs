@@ -28,18 +28,6 @@ public class Player : MonoBehaviour
 			this.rigidbody = rigidbody;
 		}
 
-		GameObject camera = GameObject.Find("Main Camera");
-
-		if ( camera )
-		{
-			TrackingCamera tracking = camera.GetComponentInChildren<TrackingCamera>(); 
-
-			if ( tracking )
-			{
-				tracking.player = this;
-			}
-		}
-
 		this.alertPanel = GameObject.Find ("AlertPanel");
 	}
 
@@ -78,7 +66,22 @@ public class Player : MonoBehaviour
 		this.rigidbody.AddForce(g * this.gravity, ForceMode.Acceleration);
 
 	}
-	
+
+	public void RegisterToTrackingCamera()
+	{
+		GameObject camera = GameObject.Find("Main Camera");
+		
+		if ( camera )
+		{
+			TrackingCamera tracking = camera.GetComponentInChildren<TrackingCamera>(); 
+			
+			if ( tracking )
+			{
+				tracking.player = this;
+			}
+		}
+	}
+
 	//=== @interface ITouchPanelEventObserver 
 	public void Touching(TouchPanel panel)
 	{

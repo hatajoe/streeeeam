@@ -23,6 +23,7 @@ public class RandomMatchMaker : MonoBehaviour
 
 	void OnJoinedRoom()
 	{
+		MainCanvas.GetInstance().ChangePhase(MainCanvas.Phase.InitOnline);
 	}
 
 	void OnPhotonRandomJoinFailed()
@@ -35,11 +36,6 @@ public class RandomMatchMaker : MonoBehaviour
 	{
 		int count = PhotonNetwork.room.playerCount;
 		Debug.Log("Player Count :"+ count);
-
-		if ( count >= 2 )
-		{
-			MainCanvas.GetInstance().ChangePhase(MainCanvas.Phase.InitPlay);
-		}
  	}
 
 	void OnGUI()
