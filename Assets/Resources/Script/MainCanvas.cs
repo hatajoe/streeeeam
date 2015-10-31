@@ -57,7 +57,6 @@ public class MainCanvas : MonoBehaviour
 		case MainCanvas.Phase.Title:
 		{
 			this.SetupTitle();
-			this.tapSE.PlayOneShot (this.tapSE.clip);
 			break;
 		}
 		case MainCanvas.Phase.PlayMode:
@@ -84,8 +83,6 @@ public class MainCanvas : MonoBehaviour
 			break;
 		}
 		}
-
-		Debug.Log("PHASE : "+this.phase);
 	}
 
 	private void SetupTitle()
