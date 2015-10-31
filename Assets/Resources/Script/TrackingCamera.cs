@@ -17,12 +17,10 @@ public class TrackingCamera : MonoBehaviour {
 			this.player.transform.localPosition.y,
 			this.transform.localPosition.z
 		);
-		/*
 		this.transform.Rotate(
-			this.player.transform.rotation.x,
-			this.player.transform.rotation.y,
-			this.transform.position.z	
+			0,
+			0,
+			this.player.transform.rotation.z	
 		);
-		*/
 	}
 }

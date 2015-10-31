@@ -47,7 +47,6 @@ public class Player : MonoBehaviour
 		if (!this.IsTouched) {
 			var dot = Vector3.Dot (Vector3.up, b);
 			dot = (dot - 1.0f)*90;
-			Debug.Log (dot);
 			this.transform.rotation = Quaternion.AngleAxis(dot, Vector3.forward);
 		}
 		this.rigidbody.AddForce(g * this.gravity, ForceMode.Acceleration);
