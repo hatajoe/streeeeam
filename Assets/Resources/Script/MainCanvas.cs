@@ -8,6 +8,8 @@ public class MainCanvas : MonoBehaviour
 	public GameObject   goodbye  = null;
 	public GameObject   pause    = null;
 
+	public AudioSource tapSE;
+
 	[System.NonSerialized] public static MainCanvas s_instance = null;
 
 	public enum Phase
@@ -27,6 +29,8 @@ public class MainCanvas : MonoBehaviour
 	{
 		MainCanvas.s_instance = this;
 		this.ChangePhase(Phase.Title);
+
+		this.tapSE = GetComponent<AudioSource>();
 	}
 
 	public static MainCanvas GetInstance()
@@ -53,11 +57,13 @@ public class MainCanvas : MonoBehaviour
 		case MainCanvas.Phase.Title:
 		{
 			this.SetupTitle();
+			this.tapSE.PlayOneShot (this.tapSE.clip);
 			break;
 		}
 		case MainCanvas.Phase.PlayMode:
 		{
 			this.SetupPlayMode();
+			this.tapSE.PlayOneShot (this.tapSE.clip);
 			break;
 		}
 		case MainCanvas.Phase.GoodBye:
@@ -68,11 +74,13 @@ public class MainCanvas : MonoBehaviour
 		case MainCanvas.Phase.Pause:
 		{
 			this.SetupPause();
+			this.tapSE.PlayOneShot (this.tapSE.clip);
 			break;
 		}
 		case MainCanvas.Phase.Play:
 		{
 			this.SetupPlay();
+			this.tapSE.PlayOneShot (this.tapSE.clip);
 			break;
 		}
 		}

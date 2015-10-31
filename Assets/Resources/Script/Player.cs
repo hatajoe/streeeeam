@@ -47,7 +47,6 @@ public class Player : MonoBehaviour
 			alert.color.b,
 			(diff.magnitude/255)*3f
 		);
-		Debug.Log (alert.color);
 		if (diff.magnitude >= DEADLINE_DISTANCE) {
 			MainCanvas.GetInstance().ChangePhase(MainCanvas.Phase.GoodBye);
 			this.gravity = 0f;
