@@ -39,17 +39,12 @@ public class Space : MonoBehaviour {
 		this.RemoveCommets(); 
 		this.CreateCommet(COMMET_COUNT);
 		this.CreatePlayer();
-
-		Destroy(demo);
 	}
 
 	public void SetupForPUN()
 	{
 		this.RemoveCommets(); 
 		this.CreateCommetForPUN(COMMET_COUNT);
-		this.CreatePlayerForPUN();
-
-		Destroy(demo);
 	}
 
 	private void RemoveCommets()
@@ -99,18 +94,21 @@ public class Space : MonoBehaviour {
 		}
 	}
 
-	private void CreatePlayer()
+	public void CreatePlayer()
 	{
 		GameObject obj = (GameObject)Instantiate(this.player, demo.transform.position, demo.transform.localRotation);
 	
 		obj.GetComponentInChildren<Player>().RegisterToTrackingCamera();
 		obj.transform.SetParent(this.gameObject.transform.parent);
+
+		Destroy(demo);
 	}
 
-	private void CreatePlayerForPUN()
+	public void CreatePlayerForPUN()
 	{
 		GameObject obj = PhotonNetwork.Instantiate("playerPUN", demo.transform.position, demo.transform.localRotation, 0);
 
 		obj.transform.SetParent(this.gameObject.transform.parent);
+		Destroy(demo);
 	}
 }

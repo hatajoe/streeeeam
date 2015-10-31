@@ -5,6 +5,18 @@ using ExitGames.Client.Photon;
 
 public class RandomMatchMaker : MonoBehaviour 
 {
+	Space space = null;
+
+
+	void Awake()
+	{
+		GameObject obj = GameObject.Find("space");
+
+		if ( obj )
+		{
+			space = obj.GetComponentInChildren<Space>();
+		}
+	}
 
 	// Use this for initialization
 	void Start()
@@ -16,6 +28,14 @@ public class RandomMatchMaker : MonoBehaviour
 		PhotonNetwork.logLevel = PhotonLogLevel.Full;
 	}
 
+	void OnCreatedRoom()
+	{
+		if ( this.space )
+			return; 
+
+		this.space.SetupForPUN();
+	}
+
 	void OnJoinedLobby()
 	{
 		PhotonNetwork.JoinRandomRoom();
@@ -23,6 +43,7 @@ public class RandomMatchMaker : MonoBehaviour
 
 	void OnJoinedRoom()
 	{
+		this.space.CreatePlayerForPUN();
 		MainCanvas.GetInstance().ChangePhase(MainCanvas.Phase.InitOnline);
 	}
 

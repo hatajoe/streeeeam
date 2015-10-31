@@ -151,7 +151,6 @@ public class MainCanvas : MonoBehaviour
 
 	private void SetupInitOnline()
 	{
-		this.space.SetupForPUN();
 		this.ChangePhase(MainCanvas.Phase.Play);
 	}
 
