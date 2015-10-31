@@ -50,7 +50,7 @@ public class Commet : MonoBehaviour {
 
 		if ( target.CompareTag("Player") )
 		{
-			StartCoroutine("Crash");
+			//StartCoroutine("Crash");
 		}
 	}
 	
