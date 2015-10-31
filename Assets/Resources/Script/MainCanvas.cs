@@ -76,6 +76,8 @@ public class MainCanvas : MonoBehaviour
 			break;
 		}
 		}
+
+		Debug.Log("PHASE : "+this.phase);
 	}
 
 	private void SetupTitle()
