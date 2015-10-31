@@ -5,6 +5,7 @@ public class Player : MonoBehaviour
 					, ITouchPanelEventObserver
 {
 	//=== Inspector
+	public Vector3 gravity    = new Vector3();
 	public Vector3 boostForce = new Vector3();
 
 	//=== Properties
@@ -28,14 +29,15 @@ public class Player : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void FixedUpdate () 
+	{
+		this.rigidbody.AddForce(this.gravity, ForceMode.Acceleration);
 	}
-
+	
 	//=== @interface ITouchPanelEventObserver 
 	public void Touching(TouchPanel panel)
 	{
-		this.rigidbody.AddForce(boostForce, ForceMode.Acceleration);
+		this.rigidbody.AddForce(this.boostForce, ForceMode.Impulse);
 	}
 
 	public void Clicked(TouchPanel panel)
