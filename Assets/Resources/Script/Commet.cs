@@ -8,7 +8,7 @@ public class Commet : MonoBehaviour {
 
 	public void Init(float y, float initialDelta, float velocity, float scale) {
 		this.velocity = velocity;
-		this.transform.localPosition = new Vector3 (0f, y, 0f);
+		this.transform.localPosition = new Vector3 (0f, y, this.transform.localPosition.z);
 		this.transform.localScale = new Vector3 (scale, scale);
 		this.Move (initialDelta);
 	}
@@ -35,4 +35,31 @@ public class Commet : MonoBehaviour {
 		
 		transform.RotateAround(planet.transform.position, transform.forward * -1.0f, delta);
 	}
+
+	private IEnumerator Crash()
+	{
+		yield return new WaitForSeconds(1.0f); 
+
+		Destroy(this.gameObject);
+	}
+
+	//=== Collision
+	void OnCollisionEnter(Collision collision)
+	{
+		GameObject target = collision.gameObject; 
+
+		if ( target.CompareTag("Player") )
+		{
+			StartCoroutine("Crash");
+		}
+	}
+	
+	void OnCollisionStay(Collision collision)
+	{
+	}
+	
+	void OnCollisionExit(Collision collision)
+	{
+	}
+
 }

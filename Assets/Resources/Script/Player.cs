@@ -45,4 +45,17 @@ public class Player : MonoBehaviour
 		// No action.
 	}
 
+	//=== Collision
+	void OnCollisionEnter(Collision collision)
+	{
+		// Hit action
+	}
+	
+	void OnCollisionStay(Collision collision)
+	{
+	}
+	
+	void OnCollisionExit(Collision collision)
+	{
+	}
 }

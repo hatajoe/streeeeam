@@ -11,8 +11,8 @@ public class Space : MonoBehaviour {
 	public static float COMMET_INITIAL_DELTA_MAX = 1050.0f;
 	public static float COMMET_VELOCITY_MIN = 0.01f;
 	public static float COMMET_VELOCITY_MAX = 0.05f;
-	public static float COMMET_SCALE_MIN = 0.8f;
-	public static float COMMET_SCALE_MAX = 1.2f;
+	public static float COMMET_SCALE_MIN = 2.8f;
+	public static float COMMET_SCALE_MAX = 6.0f;
 
 	public GameObject commet;
 	private List<Commet> commets;
