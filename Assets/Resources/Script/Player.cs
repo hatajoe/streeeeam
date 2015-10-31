@@ -5,6 +5,7 @@ public class Player : MonoBehaviour
 					, ITouchPanelEventObserver
 {
 	public GameObject planet;
+	public bool IsTouched = false;
 
 	//=== Inspector
 	public float gravity;
@@ -35,24 +36,41 @@ public class Player : MonoBehaviour
 	{
 		var g = this.planet.transform.position - this.transform.position;
 		g.Normalize ();
+		var cross = Vector3.Cross (g, Vector3.forward);
+		cross.Normalize ();
+		var dir = g + cross;
+		dir.Normalize ();
+
+		var b = this.transform.position - this.planet.transform.position;
+		b.Normalize ();
+
+		if (!this.IsTouched) {
+			var dot = Vector3.Dot (Vector3.up, b);
+			dot = (dot - 1.0f)*90;
+			Debug.Log (dot);
+			this.transform.rotation = Quaternion.AngleAxis(dot, Vector3.forward);
+		}
 		this.rigidbody.AddForce(g * this.gravity, ForceMode.Acceleration);
 	}
 	
 	//=== @interface ITouchPanelEventObserver 
 	public void Touching(TouchPanel panel)
 	{
-		var g = this.transform.position - this.planet.transform.position;
-		g.Normalize ();
-		var cross = Vector3.Cross (g, Vector3.forward);
+		this.IsTouched = true;
+
+		var b = this.transform.position - this.planet.transform.position;
+		b.Normalize ();
+		var cross = Vector3.Cross (b, Vector3.forward);
 		cross.Normalize ();
-		var dir = g + cross;
+		var dir = b + cross;
 		dir.Normalize ();
 
-		var dot = Vector3.Dot(new Vector3(this.transform.rotation.x, this.transform.rotation.y, 1.0f), dir);
-		dot = (dot - 1.0f)*-90;
-		this.transform.Rotate (new Vector3(this.transform.rotation.x, this.transform.rotation.y, dir.z), dot);
-
 		this.rigidbody.AddForce(dir * this.boost, ForceMode.Impulse);
+	}
+
+	public void Release(TouchPanel panel)
+	{
+		this.IsTouched = false;
 	}
 
 	public void Clicked(TouchPanel panel)

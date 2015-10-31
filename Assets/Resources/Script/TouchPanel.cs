@@ -9,6 +9,7 @@ public interface ITouchPanelEventObserver
 {
 	void Touching(TouchPanel panel); 
 	void Clicked(TouchPanel panel);
+	void Release(TouchPanel panel);
 }
 
 
@@ -75,6 +76,13 @@ public class TouchPanel : MonoBehaviour
 	public void OnPointerUp (PointerEventData eventData) 
 	{
 		touching = false;
+		if ( observers == null )
+			return; 
+		
+		foreach ( ITouchPanelEventObserver observer in observers )
+		{
+			observer.Release(this);
+		}
 	}
 
 	public void OnPointerClick (PointerEventData eventData)
