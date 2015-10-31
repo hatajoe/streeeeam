@@ -29,19 +29,12 @@ public class TrackingCamera : MonoBehaviour {
 			this.player.transform.localPosition.y,
 			this.transform.localPosition.z
 		);
-		/*
+
 		if (this.player.IsTouched) {
-			if (this.transform.position.z > -8.72f) {
-				this.GetComponent<Rigidbody>().AddForce(Vector3.forward * -0.1f * this.player.boost, ForceMode.Impulse);
-			}
+			this.GetComponent<Rigidbody> ().AddForce (Vector3.forward * -0.1f * this.player.rigidbody.velocity.magnitude, ForceMode.Impulse);
 		} else {
-			if (this.transform.position.z < -4.72f) {
-				this.GetComponent<Rigidbody>().AddForce(Vector3.forward * this.player.boost * 0.08f, ForceMode.Impulse);
-			} else {
-				this.GetComponent<Rigidbody>().AddForce(Vector3.forward * this.player.boost * -0.08f, ForceMode.Impulse);
-			}
+			this.GetComponent<Rigidbody> ().AddForce (Vector3.forward * 0.1f, ForceMode.Impulse);
 		}
-		*/
 
 		/*
 		this.transform.rotation = Quaternion.Euler (
