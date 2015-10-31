@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 	public bool IsTouched = false;
 
 	public GameObject alertPanel;
+	public AudioSource jetSE;
 
 	//=== Inspector
 	public float gravity;
@@ -34,6 +35,7 @@ public class Player : MonoBehaviour
 	void Start () 
 	{
 		TouchPanel.GetInstance().SetObserver(this);
+		this.jetSE = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -107,6 +109,11 @@ public class Player : MonoBehaviour
 	public void Release(TouchPanel panel)
 	{
 		this.IsTouched = false;
+	}
+
+	public void Down(TouchPanel panel)
+	{
+		this.jetSE.PlayOneShot (this.jetSE.clip);
 	}
 
 	public void Clicked(TouchPanel panel)

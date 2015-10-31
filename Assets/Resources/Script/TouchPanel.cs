@@ -8,6 +8,7 @@ using System.Collections.Generic;
 public interface ITouchPanelEventObserver
 {
 	void Touching(TouchPanel panel); 
+	void Down(TouchPanel panel);
 	void Clicked(TouchPanel panel);
 	void Release(TouchPanel panel);
 }
@@ -71,6 +72,13 @@ public class TouchPanel : MonoBehaviour
 	public void OnPointerDown (PointerEventData eventData) 
 	{
 		touching = true;
+		if ( observers == null )
+			return; 
+		
+		foreach ( ITouchPanelEventObserver observer in observers )
+		{
+			observer.Down(this);
+		}
 	}
 
 	public void OnPointerUp (PointerEventData eventData) 
