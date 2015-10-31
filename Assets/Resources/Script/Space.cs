@@ -14,17 +14,35 @@ public class Space : MonoBehaviour {
 	public static float COMMET_SCALE_MIN = 2.8f;
 	public static float COMMET_SCALE_MAX = 6.0f;
 
+	public static float MONEY_INITIAL_POS_Y_MIN = 22.00f;
+	public static float MONEY_INITIAL_POS_Y_MAX = 42.00f;
+	public static float MONEY_INITIAL_DELTA_MIN = 300.0f;
+	public static float MONEY_INITIAL_DELTA_MAX = 1050.0f;
+	public static float MONEY_VELOCITY_MIN = 0.03f;
+	public static float MONEY_VELOCITY_MAX = 0.08f;
+
 	public GameObject commet;
+	public GameObject money;
 	public GameObject player;
 	public GameObject demo;
 	private List<Commet> commets;
+	private List<Money> moneys;
 
 	// Use this for initialization
 	void Start () {
 
 		this.CreateCommet(COMMET_COUNT);
+
+		StartCoroutine ("GenerateMoney");
 	}
-	
+
+	private IEnumerator GenerateMoney() {
+		while (true) {
+			this.CreateMoney(5);
+			yield return new WaitForSeconds (60.0f);
+		}
+	}
+
 	// Update is called once per frame
 	void Update () {
 	
@@ -55,6 +73,22 @@ public class Space : MonoBehaviour {
 		foreach (Commet commet in this.commets)
 		{
 			Destroy(commet.gameObject);
+		}
+	}
+
+	private void CreateMoney( int count) {
+		this.moneys = new List<Money> ();
+		
+		for (int i = 0; i < count; i++) {
+			float y = this.GetRandomByRange(MONEY_INITIAL_POS_Y_MIN, MONEY_INITIAL_POS_Y_MAX);
+			float initialDelta = this.GetRandomByRange(MONEY_INITIAL_DELTA_MIN, MONEY_INITIAL_DELTA_MAX);
+			float velocity = this.GetRandomByRange(MONEY_VELOCITY_MIN, MONEY_VELOCITY_MAX);
+
+			GameObject obj = (GameObject)Instantiate (this.money);
+			
+			Money m = obj.GetComponentInChildren<Money>();
+			m.Init(y, initialDelta, velocity);
+			this.moneys.Add (m);
 		}
 	}
 

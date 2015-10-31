@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 	public bool IsTouched = false;
 	public float gas = 100.0f;
 	public Vector3 lastDir = new Vector3();
+	public int money = 0;
 
 	public GameObject alertPanel;
 	public AudioSource jetSE;
@@ -72,6 +73,7 @@ public class Player : MonoBehaviour
 		} else {
 			this.rigidbody.AddForce(g * this.gravity, ForceMode.Acceleration);
 		}
+		Debug.Log (this.money);
 	}
 
 	public void RegisterToTrackingCamera()
@@ -118,7 +120,7 @@ public class Player : MonoBehaviour
 		if (prevGas > 0 && this.gas <= 0) {
 			this.lastDir = cross;
 		}
-		Debug.Log (this.gas);
+		//Debug.Log (this.gas);
 	}
 
 	public void Release(TouchPanel panel)
@@ -138,15 +140,17 @@ public class Player : MonoBehaviour
 	{
 		// No action.
 	}
-
+	
 	//=== Collision
 	void OnCollisionEnter(Collision collision)
 	{
 		GameObject target = collision.gameObject; 
-		if ( target.CompareTag("Satelite") ) {
-			this.rigidbody.AddForce(this.rigidbody.velocity * -4.0f, ForceMode.Impulse);
-		} else if ( target.CompareTag("Item")) {
+		if (target.CompareTag ("Satelite")) {
+			this.rigidbody.AddForce (this.rigidbody.velocity * -4.0f, ForceMode.Impulse);
+		} else if (target.CompareTag ("Item")) {
 			this.gas = 100.0f;
+		} else if (target.CompareTag ("Money")) {
+			this.money += 1;
 		} else if (this.rigidbody.velocity.magnitude < 8.0f) {
 			this.rigidbody.AddForce(this.rigidbody.velocity * -3.0f, ForceMode.Impulse);
 		}
