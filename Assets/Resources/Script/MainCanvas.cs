@@ -7,6 +7,7 @@ public class MainCanvas : MonoBehaviour
 	public GameObject   playmode = null; 
 	public GameObject   goodbye  = null;
 	public GameObject   pause    = null;
+	public Space        space    = null;
 
 	[System.NonSerialized] public static MainCanvas s_instance = null;
 
@@ -17,6 +18,7 @@ public class MainCanvas : MonoBehaviour
 		GoodBye,
 		Pause,
 		Play,
+		InitPlay,
 	}
 
 	private Phase phase = 0;
@@ -75,6 +77,11 @@ public class MainCanvas : MonoBehaviour
 			this.SetupPlay();
 			break;
 		}
+		case MainCanvas.Phase.InitPlay:
+		{
+			this.SetupInitPlay();
+			break;
+		}
 		}
 
 		Debug.Log("PHASE : "+this.phase);
@@ -123,5 +130,11 @@ public class MainCanvas : MonoBehaviour
 		this.playmode.SetActive(false);
 		this.goodbye.SetActive(false); 
 		this.pause.SetActive(false);
+	}
+
+	private void SetupInitPlay()
+	{
+		this.space.SetupForPUN();
+		this.ChangePhase(MainCanvas.Phase.Play);
 	}
 }

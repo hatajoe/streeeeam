@@ -23,6 +23,18 @@ public class Player : MonoBehaviour
 		{
 			this.rigidbody = rigidbody;
 		}
+
+		GameObject camera = GameObject.Find("Main Camera");
+
+		if ( camera )
+		{
+			TrackingCamera tracking = camera.GetComponentInChildren<TrackingCamera>(); 
+
+			if ( tracking )
+			{
+				tracking.player = this;
+			}
+		}
 	}
 
 	void Start () 

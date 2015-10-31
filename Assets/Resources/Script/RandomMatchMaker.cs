@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using ExitGames.Client.Photon;
+
 
 public class RandomMatchMaker : MonoBehaviour 
 {
@@ -28,6 +30,17 @@ public class RandomMatchMaker : MonoBehaviour
 		Debug.Log("Can't join random room!");
 		PhotonNetwork.CreateRoom("STREEEEAM");
 	}
+
+	void OnPhotonPlayerConnected(PhotonPlayer newPlayer)
+	{
+		int count = PhotonNetwork.room.playerCount;
+		Debug.Log("Player Count :"+ count);
+
+		if ( count >= 2 )
+		{
+			MainCanvas.GetInstance().ChangePhase(MainCanvas.Phase.InitPlay);
+		}
+ 	}
 
 	void OnGUI()
 	{

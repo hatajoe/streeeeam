@@ -3,7 +3,7 @@ using System.Collections;
 
 public class TrackingCamera : MonoBehaviour {
 
-	public Player player;
+	public Player player = null;
 	private Rigidbody rigidbody = null;
 
 	// Use this for initialization
@@ -24,6 +24,9 @@ public class TrackingCamera : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if ( this.player == null )
+			return;
+
 		this.transform.position = new Vector3 (
 			this.player.transform.localPosition.x,
 			this.player.transform.localPosition.y,
