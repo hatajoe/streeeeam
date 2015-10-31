@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 public class Space : MonoBehaviour {
 
-	public static int COMMENT_COUNT = 30;
+	public static int COMMENT_COUNT = 50;
 	public static float COMMET_INITIAL_POS_Y_MIN = 12.00f;
-	public static float COMMET_INITIAL_POS_Y_MAX = 22.00f;
+	public static float COMMET_INITIAL_POS_Y_MAX = 32.00f;
 	public static float COMMET_INITIAL_DELTA_MIN = 300.0f;
 	public static float COMMET_INITIAL_DELTA_MAX = 1050.0f;
 	public static float COMMET_VELOCITY_MIN = 0.03f;
