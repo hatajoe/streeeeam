@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 	public static float DEADLINE_DISTANCE = 50f;
 	public GameObject planet;
 	public bool IsTouched = false;
+	public float gas = 100.0f;
 
 	public GameObject alertPanel;
 	public AudioSource jetSE;
@@ -104,6 +105,9 @@ public class Player : MonoBehaviour
 		this.transform.rotation = Quaternion.AngleAxis(dot, Vector3.forward);
 		this.rigidbody.angularVelocity = Vector3.zero;
 		this.rigidbody.AddForce(dir * this.boost, ForceMode.Impulse);
+
+		this.gas -= 0.2f;
+		Debug.Log (gas);
 	}
 
 	public void Release(TouchPanel panel)
@@ -127,6 +131,8 @@ public class Player : MonoBehaviour
 		GameObject target = collision.gameObject; 
 		if ( target.CompareTag("Satelite") ) {
 			this.rigidbody.AddForce(this.rigidbody.velocity * -4.0f, ForceMode.Impulse);
+		} else if ( target.CompareTag("Item")) {
+			this.gas = 100.0f;
 		} else if (this.rigidbody.velocity.magnitude < 8.0f) {
 			this.rigidbody.AddForce(this.rigidbody.velocity * -3.0f, ForceMode.Impulse);
 		}
