@@ -35,8 +35,6 @@ public class Player : MonoBehaviour
 	//=== @interface ITouchPanelEventObserver 
 	public void Touching(TouchPanel panel)
 	{
-		Debug.Log("Touching");
-
 		this.rigidbody.AddForce(boostForce, ForceMode.Acceleration);
 	}
 
