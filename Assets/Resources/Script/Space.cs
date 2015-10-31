@@ -5,12 +5,12 @@ using System.Collections.Generic;
 public class Space : MonoBehaviour {
 
 	public static int COMMENT_COUNT = 30;
-	public static float COMMET_INITIAL_POS_Y_MIN = 1.55f;
-	public static float COMMET_INITIAL_POS_Y_MAX = 1.90f;
+	public static float COMMET_INITIAL_POS_Y_MIN = 12.00f;
+	public static float COMMET_INITIAL_POS_Y_MAX = 22.00f;
 	public static float COMMET_INITIAL_DELTA_MIN = 300.0f;
 	public static float COMMET_INITIAL_DELTA_MAX = 1050.0f;
-	public static float COMMET_VELOCITY_MIN = 0.01f;
-	public static float COMMET_VELOCITY_MAX = 0.05f;
+	public static float COMMET_VELOCITY_MIN = 0.03f;
+	public static float COMMET_VELOCITY_MAX = 0.08f;
 	public static float COMMET_SCALE_MIN = 2.8f;
 	public static float COMMET_SCALE_MAX = 6.0f;
 
