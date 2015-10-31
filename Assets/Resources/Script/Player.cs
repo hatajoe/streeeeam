@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour 
 					, ITouchPanelEventObserver
 {
+	public static float DEADLINE_DISTANCE = 50f;
 	public GameObject planet;
 	public bool IsTouched = false;
+
+	public GameObject alertPanel;
 
 	//=== Inspector
 	public float gravity;
@@ -35,6 +39,8 @@ public class Player : MonoBehaviour
 				tracking.player = this;
 			}
 		}
+
+		this.alertPanel = GameObject.Find ("AlertPanel");
 	}
 
 	void Start () 
@@ -45,6 +51,19 @@ public class Player : MonoBehaviour
 	// Update is called once per frame
 	void FixedUpdate () 
 	{
+		var diff = this.transform.position - this.planet.transform.position;
+		Image alert = this.alertPanel.GetComponent<Image> ();
+		alert.color = new Color (
+			alert.color.r,
+			alert.color.g,
+			alert.color.b,
+			(diff.magnitude/255)*3f
+		);
+		if (diff.magnitude >= DEADLINE_DISTANCE) {
+			MainCanvas.GetInstance().ChangePhase(MainCanvas.Phase.GoodBye);
+			this.gravity = 0f;
+		}
+
 		var g = this.planet.transform.position - this.transform.position;
 
 		g.Normalize ();
@@ -56,15 +75,8 @@ public class Player : MonoBehaviour
 		var b = this.transform.position - this.planet.transform.position;
 		b.Normalize ();
 
-		if (!this.IsTouched) {
-			var dot = Vector3.Dot (Vector3.up, b);
-			dot = (dot - 1.0f)*90;
-			if (b.x < 0.0f) {
-				dot = 360 -dot;
-			}
-//			this.transform.rotation = Quaternion.AngleAxis(dot, Vector3.forward);
-		}
 		this.rigidbody.AddForce(g * this.gravity, ForceMode.Acceleration);
+
 	}
 	
 	//=== @interface ITouchPanelEventObserver 
