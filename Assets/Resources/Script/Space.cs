@@ -14,6 +14,7 @@ public class Space : MonoBehaviour {
 	public static float COMMET_SCALE_MIN = 2.8f;
 	public static float COMMET_SCALE_MAX = 6.0f;
 
+	public static int   MONEY_COUNT = 10;
 	public static float MONEY_INITIAL_POS_Y_MIN = 22.00f;
 	public static float MONEY_INITIAL_POS_Y_MAX = 42.00f;
 	public static float MONEY_INITIAL_DELTA_MIN = 300.0f;
@@ -25,6 +26,10 @@ public class Space : MonoBehaviour {
 	public GameObject money;
 	public GameObject player;
 	public GameObject demo;
+	public GameObject blackhole1;
+	public GameObject blackhole2;
+	public GameObject blackhole3;
+
 	private List<Commet> commets;
 	private List<Money> moneys;
 
@@ -38,7 +43,7 @@ public class Space : MonoBehaviour {
 
 	private IEnumerator GenerateMoney() {
 		while (true) {
-			this.CreateMoney(5);
+			this.CreateMoney(MONEY_COUNT);
 			yield return new WaitForSeconds (60.0f);
 		}
 	}
@@ -133,6 +138,11 @@ public class Space : MonoBehaviour {
 		GameObject obj = (GameObject)Instantiate(this.player, demo.transform.position, demo.transform.localRotation);
 	
 		obj.GetComponentInChildren<Player>().RegisterToTrackingCamera();
+		obj.GetComponentInChildren<Player>().RegisterBlackhole(
+			this.blackhole1.transform.position, 
+			this.blackhole2.transform.position,
+			this.blackhole3.transform.position
+			);
 		obj.transform.SetParent(this.gameObject.transform.parent);
 
 		Destroy(demo);

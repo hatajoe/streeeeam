@@ -9,6 +9,7 @@ public class Money : MonoBehaviour {
 	public void Init(float y, float initialDelta, float velocity) {
 		this.velocity = velocity;
 		this.transform.localPosition = new Vector3 (0f, y, this.transform.localPosition.z);
+		this.transform.localScale = new Vector3 (3.0f, 3.0f, 1.0f);
 		this.Move (initialDelta);
 	}
 	
