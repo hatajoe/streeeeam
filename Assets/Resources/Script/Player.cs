@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
 
 	public GameObject alertPanel;
 	public AudioSource jetSE;
+	public Animator    animator;
 
 	//=== Inspector
 	public float gravity;
@@ -85,10 +86,22 @@ public class Player : MonoBehaviour
 		}
 	}
 
+	public void SetBoostLevel( float gas, Animator anim )
+	{
+		int lv = 0;
+
+		if      ( gas >= 60 ) lv = 3;
+		else if ( gas >= 30 ) lv = 2;
+		else if ( gas >   0 ) lv = 1;
+
+		anim.SetInteger("Level", lv);
+	}
+
 	//=== @interface ITouchPanelEventObserver 
 	public void Touching(TouchPanel panel)
 	{
 		this.IsTouched = true;
+		this.animator.SetBool("Touched", this.IsTouched);
 
 		var b = this.transform.position - this.planet.transform.position;
 		b.Normalize ();
@@ -108,11 +121,14 @@ public class Player : MonoBehaviour
 
 		this.gas -= 0.2f;
 		Debug.Log (gas);
+
+		this.SetBoostLevel(this.gas, this.animator);
 	}
 
 	public void Release(TouchPanel panel)
 	{
 		this.IsTouched = false;
+		this.animator.SetBool("Touched", this.IsTouched);
 	}
 
 	public void Down(TouchPanel panel)
