@@ -12,4 +12,18 @@ public class PhotonObject : Photon.MonoBehaviour
 			player.RegisterToTrackingCamera();
 		}
 	}
+
+	void FixedUpdate()
+	{
+		if ( photonView.isMine == false )
+			return;
+
+		if ( this.player == null )
+			return;
+
+		if ( this.player.IsDead() == true )
+		{
+			MainCanvas.GetInstance().ChangePhase(MainCanvas.Phase.GoodBye);
+		}
+	}
 }

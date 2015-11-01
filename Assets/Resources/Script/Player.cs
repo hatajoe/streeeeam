@@ -28,9 +28,11 @@ public class Player : MonoBehaviour
 	//=== Inspector
 	public float gravity;
 	public float boost;
+	public bool  onlinePlayer = false;
 
 	//=== Properties
 	public Rigidbody rigidbody = null;
+	private bool     dead = false;
 
 	// Use this for initialization
 	void Awake()
@@ -53,6 +55,7 @@ public class Player : MonoBehaviour
 		this.jetSE = audioSources[0];
 		this.itemSE = audioSources[1];
 		this.coinSE = audioSources[2];
+		this.dead   = false;
 	}
 	
 	// Update is called once per frame
@@ -67,8 +70,13 @@ public class Player : MonoBehaviour
 			(diff.magnitude/255)*3f
 		);
 		if (diff.magnitude >= DEADLINE_DISTANCE) {
-			MainCanvas.GetInstance().ChangePhase(MainCanvas.Phase.GoodBye);
+			this.dead = true;
 			this.gravity = 0f;
+
+			if ( onlinePlayer == false )
+			{
+				MainCanvas.GetInstance().ChangePhase(MainCanvas.Phase.GoodBye);
+			}
 		}
 
 		var g = this.planet.transform.position - this.transform.position;
@@ -106,6 +114,11 @@ public class Player : MonoBehaviour
 		} else {
 			this.rigidbody.AddForce(g * gra, ForceMode.Acceleration);
 		}
+	}
+
+	public bool IsDead()
+	{
+		return this.dead;
 	}
 
 	public void RegisterToTrackingCamera()
