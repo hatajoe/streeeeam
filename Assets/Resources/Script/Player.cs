@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
 	public GameObject alertPanel;
 	public AudioSource jetSE;
 	public Animator    animator;
+	public ParticleSystem boostEF;
 
 	//=== Inspector
 	public float gravity;
@@ -34,6 +35,7 @@ public class Player : MonoBehaviour
 		}
 
 		this.alertPanel = GameObject.Find ("AlertPanel");
+		this.StopBoostEffect();
 	}
 
 	void Start () 
@@ -103,6 +105,25 @@ public class Player : MonoBehaviour
 		anim.SetInteger("Level", lv);
 	}
 
+	public void PlayBoostEffect()
+	{
+		if ( this.boostEF == null )
+			return; 
+
+//		this.boostEF.startSize = 1.0f;
+		this.boostEF.startColor = Color.white;
+	}
+
+	public void StopBoostEffect()
+	{
+		if ( this.boostEF == null )
+			return;
+
+//		this.boostEF.startSize = 0f;
+		this.boostEF.startColor = Color.clear;
+	}
+
+
 	//=== @interface ITouchPanelEventObserver 
 	public void Touching(TouchPanel panel)
 	{
@@ -143,6 +164,7 @@ public class Player : MonoBehaviour
 	{
 		this.IsTouched = false;
 		this.animator.SetBool("Touched", this.IsTouched);
+		this.StopBoostEffect();
 	}
 
 	public void Down(TouchPanel panel)
@@ -151,6 +173,7 @@ public class Player : MonoBehaviour
 			return;
 		}
 		this.jetSE.PlayOneShot (this.jetSE.clip);
+		this.PlayBoostEffect();
 	}
 
 	public void Clicked(TouchPanel panel)
