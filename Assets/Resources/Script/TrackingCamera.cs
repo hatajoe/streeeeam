@@ -36,7 +36,7 @@ public class TrackingCamera : MonoBehaviour {
 		if (this.player.IsTouched) {
 			this.GetComponent<Rigidbody> ().AddForce (Vector3.forward * -0.1f * this.player.rigidbody.velocity.magnitude, ForceMode.Impulse);
 		} else {
-			this.GetComponent<Rigidbody> ().AddForce (Vector3.forward * 0.1f, ForceMode.Impulse);
+			this.GetComponent<Rigidbody> ().AddForce (Vector3.forward * 0.05f, ForceMode.Impulse);
 		}
 
 		/*

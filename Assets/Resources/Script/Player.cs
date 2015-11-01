@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
 	public GameObject planet;
 	public bool IsTouched = false;
 	public float gas = 100.0f;
+	public Vector3 lastDir = new Vector3();
+	public int money = 0;
 
 	public GameObject alertPanel;
 	public AudioSource jetSE;
@@ -67,8 +69,12 @@ public class Player : MonoBehaviour
 		var b = this.transform.position - this.planet.transform.position;
 		b.Normalize ();
 
-		this.rigidbody.AddForce(g * this.gravity, ForceMode.Acceleration);
-
+		if (this.gas <= 0) {
+			this.rigidbody.AddForce(this.lastDir * this.gravity, ForceMode.Acceleration);
+		} else {
+			this.rigidbody.AddForce(g * this.gravity, ForceMode.Acceleration);
+		}
+		Debug.Log (this.money);
 	}
 
 	public void RegisterToTrackingCamera()
@@ -100,6 +106,9 @@ public class Player : MonoBehaviour
 	//=== @interface ITouchPanelEventObserver 
 	public void Touching(TouchPanel panel)
 	{
+		if (this.gas <= 0) {
+			return;
+		}
 		this.IsTouched = true;
 		this.animator.SetBool("Touched", this.IsTouched);
 
@@ -119,8 +128,13 @@ public class Player : MonoBehaviour
 		this.rigidbody.angularVelocity = Vector3.zero;
 		this.rigidbody.AddForce(dir * this.boost, ForceMode.Impulse);
 
+		var prevGas = this.gas;
 		this.gas -= 0.2f;
-		Debug.Log (gas);
+
+		if (prevGas > 0 && this.gas <= 0) {
+			this.lastDir = cross;
+		}
+		//Debug.Log (this.gas);
 
 		this.SetBoostLevel(this.gas, this.animator);
 	}
@@ -133,6 +147,9 @@ public class Player : MonoBehaviour
 
 	public void Down(TouchPanel panel)
 	{
+		if (this.gas <= 0) {
+			return;
+		}
 		this.jetSE.PlayOneShot (this.jetSE.clip);
 	}
 
@@ -140,15 +157,17 @@ public class Player : MonoBehaviour
 	{
 		// No action.
 	}
-
+	
 	//=== Collision
 	void OnCollisionEnter(Collision collision)
 	{
 		GameObject target = collision.gameObject; 
-		if ( target.CompareTag("Satelite") ) {
-			this.rigidbody.AddForce(this.rigidbody.velocity * -4.0f, ForceMode.Impulse);
-		} else if ( target.CompareTag("Item")) {
+		if (target.CompareTag ("Satelite")) {
+			this.rigidbody.AddForce (this.rigidbody.velocity * -4.0f, ForceMode.Impulse);
+		} else if (target.CompareTag ("Item")) {
 			this.gas = 100.0f;
+		} else if (target.CompareTag ("Money")) {
+			this.money += 1;
 		} else if (this.rigidbody.velocity.magnitude < 8.0f) {
 			this.rigidbody.AddForce(this.rigidbody.velocity * -3.0f, ForceMode.Impulse);
 		}
