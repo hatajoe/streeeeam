@@ -152,6 +152,13 @@ public class Space : MonoBehaviour {
 	{
 		GameObject obj = PhotonNetwork.Instantiate("playerPUN", demo.transform.position, demo.transform.localRotation, 0);
 
+		obj.GetComponentInChildren<Player>().RegisterToTrackingCamera();
+		obj.GetComponentInChildren<Player>().RegisterBlackhole(
+			this.blackhole1.transform.position, 
+			this.blackhole2.transform.position,
+			this.blackhole3.transform.position
+			);
+
 		obj.transform.SetParent(this.gameObject.transform.parent);
 		Destroy(demo);
 	}
