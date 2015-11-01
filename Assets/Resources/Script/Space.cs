@@ -26,6 +26,10 @@ public class Space : MonoBehaviour {
 	public GameObject money;
 	public GameObject player;
 	public GameObject demo;
+	public GameObject blackhole1;
+	public GameObject blackhole2;
+	public GameObject blackhole3;
+
 	private List<Commet> commets;
 	private List<Money> moneys;
 
@@ -134,6 +138,11 @@ public class Space : MonoBehaviour {
 		GameObject obj = (GameObject)Instantiate(this.player, demo.transform.position, demo.transform.localRotation);
 	
 		obj.GetComponentInChildren<Player>().RegisterToTrackingCamera();
+		obj.GetComponentInChildren<Player>().RegisterBlackhole(
+			this.blackhole1.transform.position, 
+			this.blackhole2.transform.position,
+			this.blackhole3.transform.position
+			);
 		obj.transform.SetParent(this.gameObject.transform.parent);
 
 		Destroy(demo);
