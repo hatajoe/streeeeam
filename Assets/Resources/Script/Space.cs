@@ -14,6 +14,7 @@ public class Space : MonoBehaviour {
 	public static float COMMET_SCALE_MIN = 2.8f;
 	public static float COMMET_SCALE_MAX = 6.0f;
 
+	public static int   MONEY_COUNT = 10;
 	public static float MONEY_INITIAL_POS_Y_MIN = 22.00f;
 	public static float MONEY_INITIAL_POS_Y_MAX = 42.00f;
 	public static float MONEY_INITIAL_DELTA_MIN = 300.0f;
@@ -38,7 +39,7 @@ public class Space : MonoBehaviour {
 
 	private IEnumerator GenerateMoney() {
 		while (true) {
-			this.CreateMoney(5);
+			this.CreateMoney(MONEY_COUNT);
 			yield return new WaitForSeconds (60.0f);
 		}
 	}

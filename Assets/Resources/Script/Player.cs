@@ -13,8 +13,11 @@ public class Player : MonoBehaviour
 	public int money = 0;
 
 	public GameObject alertPanel;
-	public AudioSource jetSE;
 	public Animator    animator;
+
+	public AudioSource jetSE;
+	public AudioSource itemSE;
+	public AudioSource coinSE;
 
 	//=== Inspector
 	public float gravity;
@@ -39,7 +42,10 @@ public class Player : MonoBehaviour
 	void Start () 
 	{
 		TouchPanel.GetInstance().SetObserver(this);
-		this.jetSE = GetComponent<AudioSource>();
+		AudioSource[] audioSources = GetComponents<AudioSource>();
+		this.jetSE = audioSources[0];
+		this.itemSE = audioSources[1];
+		this.coinSE = audioSources[2];
 	}
 	
 	// Update is called once per frame
@@ -74,7 +80,6 @@ public class Player : MonoBehaviour
 		} else {
 			this.rigidbody.AddForce(g * this.gravity, ForceMode.Acceleration);
 		}
-		Debug.Log (this.money);
 	}
 
 	public void RegisterToTrackingCamera()
@@ -129,12 +134,10 @@ public class Player : MonoBehaviour
 		this.rigidbody.AddForce(dir * this.boost, ForceMode.Impulse);
 
 		var prevGas = this.gas;
-		this.gas -= 0.2f;
-
+		this.gas -= 0.1f;
 		if (prevGas > 0 && this.gas <= 0) {
 			this.lastDir = cross;
 		}
-		//Debug.Log (this.gas);
 
 		this.SetBoostLevel(this.gas, this.animator);
 	}
@@ -165,9 +168,14 @@ public class Player : MonoBehaviour
 		if (target.CompareTag ("Satelite")) {
 			this.rigidbody.AddForce (this.rigidbody.velocity * -4.0f, ForceMode.Impulse);
 		} else if (target.CompareTag ("Item")) {
+			this.itemSE.PlayOneShot (this.itemSE.clip);
 			this.gas = 100.0f;
 		} else if (target.CompareTag ("Money")) {
+			this.itemSE.PlayOneShot (this.coinSE.clip);
 			this.money += 1;
+			var m = this.alertPanel.transform.Find("MoneyCount");
+			Text t = m.GetComponent<Text> ();
+			t.text = this.money.ToString();
 		} else if (this.rigidbody.velocity.magnitude < 8.0f) {
 			this.rigidbody.AddForce(this.rigidbody.velocity * -3.0f, ForceMode.Impulse);
 		}
