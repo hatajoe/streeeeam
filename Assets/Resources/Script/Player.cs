@@ -210,7 +210,6 @@ public class Player : MonoBehaviour
 		} else if (target.CompareTag ("Blackhole")) {
 			var dir = new Vector3(Random.value, Random.value, 0f);
 			dir.Normalize();
-			Debug.Log (dir);
 			this.rigidbody.AddForce(dir * 50.0f, ForceMode.Impulse);
 		} else if (this.rigidbody.velocity.magnitude < 8.0f) {
 			this.rigidbody.AddForce(this.rigidbody.velocity * -3.0f, ForceMode.Impulse);
